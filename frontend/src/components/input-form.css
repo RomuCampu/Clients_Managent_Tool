@@ -1,0 +1,70 @@
+.group {
+  position: relative;
+  /* margin: 35px 0; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+}
+.group .form-input {
+  background-color: rgb(253, 251, 251);
+  color: gray;
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 45%;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid gray;
+  margin: 25px 0;
+}
+.group .form-input:focus {
+  outline: none;
+}
+.group .form-input:focus ~ .form-input-label {
+  top: -20px;
+  left: 150px;
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+  color: rgb(245, 245, 42);
+}
+.group input[type="password"] {
+  letter-spacing: 0.3em;
+}
+.group .form-input-label {
+  color: rgb(2, 2, 2);
+  font-size: 16px;
+  font-weight: bold;
+  position: absolute;
+  pointer-events: none;
+  left: 20rem;
+  top: 35px;
+  transition: 800ms ease all;
+}
+.group .form-input-label.shrink {
+  top: -14px;
+  font-size: 12px;
+  color: black;
+}
+
+.text-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (max-width: 800px) {
+  .group .form-input {
+    width: 200%;
+  }
+
+  .group .form-input-label {
+    margin-left: -19rem;
+  }
+
+  .group .form-input:focus ~ .form-input-label {
+    top: -20px;
+    left: 200px;
+  }
+}
