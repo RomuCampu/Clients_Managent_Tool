@@ -1,24 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
+import { HomePage } from './pages/HomePage';
+import { Dashboard } from './pages/Dashboard';
+import { CustomerPage } from './pages/CustomerPage';
+import { NotFound } from './pages/NotFound';
+import { Header } from './components/Header';
+import { FormPage } from './pages/FormPage';
+import { EditCustomerPage } from './pages/EditCustomerPage';
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <main className="">
+        <Header />
+        <Container>
+          <Switch>
+            <Route exact path='/' component={HomePage} />
+            <Route path='/dashboard' component={Dashboard} />
+            <Route path='/client/:id' component={CustomerPage} />
+            <Route path='/form' component={FormPage} />
+            <Route path='/edit-form/:id' component={EditCustomerPage} />
+            <Route path='*' component={NotFound} />
+          </Switch>
+        </Container>
+      </main>
+    </Router>
   );
 }
 
