@@ -52,8 +52,6 @@ export const FormPage = () => {
       [event.target.name]: event.target.value
     }))
 
-    console.log(client);
-
     setClient({
       ...client, 'contact_person': contact
     })
