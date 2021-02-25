@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from "react-router-dom"
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
+import { readClientAction, updateClientAction } from '../actions/clientActions'
 import { InputFieldComponent } from '../components/InputFieldComponent'
 import { HeaderTwo } from '../components/HeaderTwo'
 import { Form } from 'react-bootstrap'
@@ -8,48 +10,38 @@ import { TextArea } from '../components/TextArea'
 import CustomButton from '../components/CustomButton'
 import './form-page.css'
 
-
-
 const useFetchedData = (match) => {
-  const [fetchedData, setFetchedData] = useState('')
+
+  const dispatch = useDispatch()
+  const readClient = useSelector(state => state.readClient)
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(`http://localhost:5000/api/clients/profile/${match.params.id}`)
-        .then(res => setFetchedData(res.data))
-        console.log(data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    fetchData()
-  }, [match])
-  return fetchedData
+    dispatch(readClientAction(match.params.id))
+  }, [match, dispatch])
+
+  const data = readClient.client;
+  return data;
+
 }
 
 export const EditCustomerPage = ({ match }) => {
 
+  const history = useHistory()
+  // const dispatch = useDispatch()
+  // const client = useSelector(state => state.updateClient)
   const data = useFetchedData(match);
 
   const [client, setClient] = useState({
-    clientDetails: '',
+    clientDetails: {},
     businessName: '',
     country: '',
     address: '',
     website: '',
     email: '',
     product: '',
-    contact_person: ''
+    contact_person: {}
   })
-
-  useEffect(() => {
-    setClient(data)
-  }, [data])
-
-  console.log(client);
-
-  const history = useHistory()
 
   const [details, setClientDetails] = useState({
     header: '',
@@ -62,6 +54,16 @@ export const EditCustomerPage = ({ match }) => {
     phone: '',
     language: ''
   })
+
+  useEffect(() => {
+
+    // dispatch(updateClientAction())
+    let isSubscribed = true;
+    setClient(data)
+    setClientDetails(data.clientDetails)
+    setContactDetails(data.contact_person)
+    return () => !isSubscribed
+  }, [data])
 
   const handleClientDetails = (event) => {
     setClientDetails(previousState => ({
@@ -93,19 +95,39 @@ export const EditCustomerPage = ({ match }) => {
     )
   }
 
-  const {
-    clientDetails,
-    businessName,
-    country,
-    address,
-    website,
-    email,
-    product,
-    contact_person
-  } = client
-
   const handleSubmit = async (event) => {
     event.preventDefault()
+
+    const updatedClient = {
+      clientDetails: {
+        header: details.header,
+        content: details.content,
+      },
+      businessName: client.businessName,
+      country: client.country,
+      address: client.address,
+      website: client.website,
+      email: client.email,
+      product: client.product,
+      contact_person: {
+        name: contact.name,
+        contact_email: contact.contact_email,
+        phone: contact.phone,
+        language: contact.language,
+      }
+    }
+
+    const {
+      clientDetails,
+      businessName,
+      country,
+      address,
+      website,
+      email,
+      product,
+      contact_person
+    } = updatedClient
+
 
     const body = JSON.stringify({
       clientDetails,
@@ -117,6 +139,8 @@ export const EditCustomerPage = ({ match }) => {
       product,
       contact_person
     })
+
+    console.log(body);
 
     const config = {
       headers: {
@@ -144,7 +168,7 @@ export const EditCustomerPage = ({ match }) => {
           <InputFieldComponent
             name="header"
             type="text"
-            value={client.clientDetails && client.clientDetails.header}
+            value={details && details.header}
             onChange={handleClientDetails}
             label="Offer"
             required
@@ -153,7 +177,7 @@ export const EditCustomerPage = ({ match }) => {
           <TextArea
             name="content"
             type="text"
-            value={client.clientDetails && client.clientDetails.content}
+            value={details && details.content}
             onChange={handleClientDetails}
             required
           />
@@ -221,7 +245,7 @@ export const EditCustomerPage = ({ match }) => {
             <InputFieldComponent
               name="name"
               type="text"
-              value={client.contact_person && client.contact_person.name}
+              value={contact && contact.name}
               onChange={handleContactDetails}
               label="Name"
               required
@@ -230,7 +254,7 @@ export const EditCustomerPage = ({ match }) => {
             <InputFieldComponent
               name="contact_email"
               type="email"
-              value={client.contact_person && client.contact_person.contact_email}
+              value={contact && contact.contact_email}
               onChange={handleContactDetails}
               label="Email"
               required
@@ -239,7 +263,7 @@ export const EditCustomerPage = ({ match }) => {
             <InputFieldComponent
               name="phone"
               type="text"
-              value={client.contact_person && client.contact_person.phone}
+              value={contact && contact.phone}
               onChange={handleContactDetails}
               label="Phone"
               required
@@ -248,7 +272,7 @@ export const EditCustomerPage = ({ match }) => {
             <InputFieldComponent
               name="language"
               type="text"
-              value={client.contact_person && client.contact_person.language}
+              value={contact && contact.language}
               onChange={handleContactDetails}
               label="Language"
               required
