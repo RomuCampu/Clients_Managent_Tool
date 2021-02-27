@@ -1,0 +1,29 @@
+h2 {
+  text-decoration: underline;
+  font-style: italic;
+  text-transform: uppercase;
+}
+
+.text-area_wrapper {
+  justify-content: center;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.client-side,
+.contact-side {
+  margin-top: -30px;
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 800px) {
+  .text-area_wrapper {
+    width: 100%;
+    margin-left: -2%;
+  }
+}

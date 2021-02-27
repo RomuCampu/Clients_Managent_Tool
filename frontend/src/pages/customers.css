@@ -1,0 +1,98 @@
+.client-header {
+  text-decoration: underline;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.text-area {
+  white-space: pre-wrap;
+}
+
+p {
+  font-size: 14px;
+}
+
+span {
+  font-style: italic;
+  color: rgb(28, 115, 245);
+  font-size: 18px;
+}
+
+.wrapper p {
+  padding-top: 1px;
+}
+
+.jumbo-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.client-details {
+  min-height: 400px;
+  width: 400px;
+  max-width: 400px;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+
+.client-details > h5 {
+  text-decoration: underline;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.contact-details {
+  min-height: 400px;
+  width: 400px;
+  max-width: 400px;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+
+.contact-details > h5 {
+  text-decoration: underline;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.contact-details > p {
+  padding-top: 1.2rem;
+}
+
+.icon-wrapper {
+  /* cursor: pointer; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.icon-wrapper i {
+  cursor: pointer;
+  margin: 10px;
+}
+
+span {
+  font-weight: normal;
+}
+
+@media only screen and (max-width: 700px) {
+  .jumbo-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contact-details {
+    margin-top: 30px;
+  }
+
+  .icon-wrapper {
+    flex-direction: row;
+  }
+}
